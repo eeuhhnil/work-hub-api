@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dtos';
+import {ConfigService} from "@nestjs/config";
+import {AuthPayload} from "../../common/types";
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly configService: ConfigService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {
@@ -25,16 +28,65 @@ export class AuthService {
   }
 
   async loginLocal(user: any) {
+    const payload: AuthPayload = {
+      sub: user._id,
+      username: user.username,
+      email: user.email,
+      fullName: user.fullName,
+      googleId: user.googleId,
+      role: user.role,
+    }
+
+    const [ accessToken, refreshToken ] = await Promise.all([
+      this.jwtService.signAsync(payload),
+      this.jwtService.signAsync({
+        sub: payload.sub
+      }, {
+        expiresIn: '7d',
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+      })
+    ])
+
+    return {
+      accessToken,
+      refreshToken,
+    }
   }
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByEmail(email)
-    if (user && await bcrypt.compare(password, user.password)) {
+    const user = await this.userService.findOne({ email: email})
+    if (user && bcrypt.compareSync(password, user.password)) {
       const { password, ...result } = user
       return result
     }
 
     return null
+  }
+
+  async refreshToken(refreshToken: string) {
+    const decodedPayload = await this.jwtService.verifyAsync(refreshToken, {
+      secret: this.configService.get('JWT_REFRESH_SECRET'),
+    })
+
+    const user = await this.userService.findOne({ _id: decodedPayload.sub })
+    if (!user) throw new NotFoundException('USER_NOT_FOUND')
+
+    const newAccessToken = await this.jwtService.signAsync(
+      {
+        sub: user._id,
+        username: user.username,
+        fullName: user.fullName,
+        googleId: user.googleId,
+        role: user.systemRole,
+      },
+      {
+        expiresIn: '12h',
+      },
+    )
+
+    return {
+      accessToken: newAccessToken,
+    }
   }
 
   private async generateUniqueUsername(fullName: string): Promise<string> {

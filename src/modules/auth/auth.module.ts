@@ -4,6 +4,7 @@ import { UserModule } from '../user/user.module'
 import { AuthController } from './auth.controller'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
+import {JwtStrategy, LocalStrategy} from "./strategies";
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt'
       imports: [ConfigModule],
       useFactory(config: ConfigService) {
         return {
-          secret: config.get('JWT_SECRET'),
+          secret: config.get<string>('JWT_SECRET'),
           signOptions: { expiresIn: "1d" },
         };
       },
@@ -20,6 +21,10 @@ import { JwtModule } from '@nestjs/jwt'
     UserModule
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+  ],
 })
 export class AuthModule {}

@@ -15,12 +15,8 @@ export class UserService {
     return this.db.user.create(dto)
   }
 
-  async findByEmail(email: string) {
-    return this.db.user.findOne({ email: email })
-  }
-
-  async findByGoogleId(googleId: string) {
-    return this.db.user.findOne({ googleId: googleId })
+  async findOne(filter: FilterQuery<User>): Promise<User | null> {
+    return this.db.user.findOne(filter)
   }
 
   async exist(filter: FilterQuery<User>) {
