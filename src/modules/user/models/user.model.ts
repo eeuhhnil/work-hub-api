@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IdLike } from '../../../common/types'
-import { SystemRole } from '../types/system-role.type'
+import { SystemRole } from '../types'
 
 @Schema({
   timestamps: true
@@ -11,12 +11,14 @@ export class User {
   @Prop({
     type: String,
     required: true,
+    unique: true,
   })
   username: String
 
   @Prop({
     type: String,
     required: true,
+    unique: true,
   })
   email: string
 
@@ -41,6 +43,7 @@ export class User {
   @Prop({
     type: String,
     required: false,
+    unique: true,
   })
   googleId?: string
 
