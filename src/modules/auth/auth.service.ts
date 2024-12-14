@@ -38,8 +38,8 @@ export class AuthService {
     }
 
     const [ accessToken, refreshToken ] = await Promise.all([
-      this.jwtService.signAsync(payload),
-      this.jwtService.signAsync({
+      this.jwtService.sign(payload),
+      this.jwtService.sign({
         sub: payload.sub
       }, {
         expiresIn: '7d',
@@ -101,8 +101,10 @@ export class AuthService {
   }
 
   private generateRandomUsername(baseName: string): string {
+    const sanitizedBaseName = baseName.replace(/\s+/g, '').toLowerCase()
     const randomSuffix = this.generateRandomString(6)
-    return `${baseName}${randomSuffix}`
+
+    return `${sanitizedBaseName}${randomSuffix}`
   }
 
   private generateRandomString(length: number): string {
