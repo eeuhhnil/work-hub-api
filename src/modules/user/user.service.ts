@@ -1,25 +1,28 @@
 import { Injectable } from '@nestjs/common'
-import { DatabaseService } from '../../common/modules/database/database.service'
+import { DbService } from '../../common/db/db.service';
 import { CreateUserDto } from './dto';
-import { User } from './models';
 import { FilterQuery } from 'mongoose';
+import { User } from '../../common/db/models';
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly db: DatabaseService,
+    private readonly db: DbService,
   ) {
   }
 
-  async create(dto: CreateUserDto): Promise<Omit<User, '_id'>> {
-    return this.db.user.create(dto)
+  async createUser(payload: CreateUserDto): Promise<Omit<User, 'password'>> {
+    const user = await this.db.user.create(payload)
+    const { password, ...safeUser } = user.toJSON()
+
+    return safeUser
   }
 
-  async findOne(filter: FilterQuery<User>): Promise<User | null> {
+  async findOne(filter: FilterQuery<User>) {
     return this.db.user.findOne(filter)
   }
 
-  async exist(filter: FilterQuery<User>) {
+  async exists(filter: FilterQuery<User>) {
     return this.db.user.exists(filter)
   }
 }
