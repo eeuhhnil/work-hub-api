@@ -1,4 +1,4 @@
-import { SystemRole } from '../../../modules/user/types';
+import { SystemRole } from '../../../modules/user/enums';
 
 export type AuthPayload = {
   sub: string

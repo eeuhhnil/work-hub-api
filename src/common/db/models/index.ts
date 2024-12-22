@@ -1,1 +1,6 @@
 export * from './user.model'
+export * from './space.model'
+export * from './space-member.model'
+export * from './project.model'
+export * from './project-member.model'
+export * from './task.model'

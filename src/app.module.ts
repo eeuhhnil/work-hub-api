@@ -5,6 +5,7 @@ import { DbModule } from './common/db/db.module';
 import { AuthModule } from './common/auth/auth.module';
 import { JwtAuthGuard } from './common/auth/guards';
 import { APP_GUARD } from '@nestjs/core';
+import { SpaceModule } from './modules/space/space.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { APP_GUARD } from '@nestjs/core';
     DbModule,
     AuthModule,
     UserModule,
+    SpaceModule,
   ],
   controllers: [],
   providers: [

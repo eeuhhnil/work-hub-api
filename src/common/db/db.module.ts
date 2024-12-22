@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { DbService } from './db.service';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
-import { UserSchema } from './models';
+import { ProjectMemberSchema, ProjectSchema, SpaceMemberSchema, SpaceSchema, TaskSchema, UserSchema } from './models';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Global()
@@ -20,6 +20,26 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       {
         name: 'User',
         schema: UserSchema,
+      },
+      {
+        name: 'Space',
+        schema: SpaceSchema,
+      },
+      {
+        name: 'SpaceMember',
+        schema: SpaceMemberSchema,
+      },
+      {
+        name: 'Project',
+        schema: ProjectSchema,
+      },
+      {
+        name: 'ProjectMember',
+        schema: ProjectMemberSchema,
+      },
+      {
+        name: 'Task',
+        schema: TaskSchema,
       }
     ]),
   ],

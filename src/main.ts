@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ResponseInterceptor } from './common/handlers';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -10,6 +11,8 @@ async function bootstrap() {
 
   // validation pipe
   app.useGlobalPipes(new ValidationPipe())
+
+  app.useGlobalInterceptors(new ResponseInterceptor())
 
   // cors
   app.enableCors({
