@@ -42,7 +42,7 @@ export class SpaceController {
     @AuthUser() authUser: AuthPayload,
     @Param('id') id: string,
   ) {
-    // await this.spaceMemberService.checkOwnership(id, authUser.sub)
+    await this.spaceMemberService.checkOwnership(id, authUser.sub)
     return this.spaceService.deleteSpace(id)
   }
 }

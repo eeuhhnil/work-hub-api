@@ -18,7 +18,7 @@ export class DbService implements OnApplicationBootstrap{
   ) {
     this.user = userModel
     this.space = spaceModel
-    this.spaceMember = this.spaceMemberModel
+    this.spaceMember = spaceMemberModel
   }
 
   onApplicationBootstrap(): any {

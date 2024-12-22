@@ -38,25 +38,25 @@ export class Task {
   dueDate?: Date
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'User',
   })
   owner: IdLike<User>
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'User',
   })
   assignee: IdLike<User>
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'Space',
   })
   space: IdLike<Space>
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'Project',
   })
   project: IdLike<Project>

@@ -13,13 +13,13 @@ export class ProjectMember {
   _id: mongoose.Types.ObjectId
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'Project',
   })
   project: IdLike<Project>
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'User',
   })
   user: IdLike<User>

@@ -2,6 +2,7 @@ import { ConflictException, ForbiddenException, Injectable, NotFoundException } 
 import { DbService } from "../../../common/db/db.service";
 import { IdLike } from "../../../common/types";
 import { SpaceRole } from "../enums";
+import mongoose from "mongoose";
 
 @Injectable()
 export class SpaceMemberService {
@@ -62,9 +63,9 @@ export class SpaceMemberService {
   }
   
   async checkOwnership(spaceId: IdLike<string>, userId: IdLike<string>) {
-    const owner = await this.db.spaceMember.findOne({
-      space: spaceId,
-      user: userId,
+    const owner = await this.db.spaceMember.exists({
+      space: spaceId as mongoose.Types.ObjectId,
+      user: userId as mongoose.Types.ObjectId,
       role: SpaceRole.Owner,
     })
     if (!owner) throw new ForbiddenException('NOT_SPACE_OWNER')

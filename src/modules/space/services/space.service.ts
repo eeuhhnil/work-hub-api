@@ -62,6 +62,7 @@ export class SpaceService {
   }
 
   async deleteSpace(spaceId: IdLike<string>) {
+    await this.db.spaceMember.deleteMany({space: spaceId})
     return this.db.space.deleteOne({
       _id: spaceId,
     })

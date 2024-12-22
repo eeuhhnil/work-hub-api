@@ -13,13 +13,13 @@ export class SpaceMember {
   _id: mongoose.Types.ObjectId
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'Space',
   })
   space: IdLike<Space>
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'User',
   })
   user: IdLike<User>

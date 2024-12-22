@@ -16,7 +16,7 @@ export class Project {
   name: string
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'Space',
   })
   space: IdLike<Space>
