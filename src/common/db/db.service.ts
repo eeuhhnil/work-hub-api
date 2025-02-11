@@ -1,36 +1,39 @@
-import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
 import { PaginateModel } from "mongoose";
-import { Space, SpaceMember, User } from './models';
+import { Project, ProjectMember, Space, SpaceMember, User } from "./models";
 
 @Injectable()
-export class DbService implements OnApplicationBootstrap{
-  private readonly logger = new Logger(DbService.name)
+export class DbService implements OnApplicationBootstrap {
+  private readonly logger = new Logger(DbService.name);
 
-  user: PaginateModel<User>
-  space: PaginateModel<Space>
-  spaceMember: PaginateModel<SpaceMember>
+  user: PaginateModel<User>;
+  space: PaginateModel<Space>;
+  spaceMember: PaginateModel<SpaceMember>;
+  project: PaginateModel<Project>;
+  projectMember: PaginateModel<ProjectMember>;
 
   constructor(
-    @InjectModel('User') private userModel: PaginateModel<User>,
-    @InjectModel('Space') private spaceModel: PaginateModel<Space>,
-    @InjectModel('SpaceMember') private spaceMemberModel: PaginateModel<SpaceMember>,
+    @InjectModel("User") private userModel: PaginateModel<User>,
+    @InjectModel("Space") private spaceModel: PaginateModel<Space>,
+    @InjectModel("SpaceMember") private spaceMemberModel: PaginateModel<SpaceMember>,
+    @InjectModel("Project") private projectModel: PaginateModel<Project>,
+    @InjectModel("ProjectMember") private projectMemberModel: PaginateModel<ProjectMember>
   ) {
-    this.user = userModel
-    this.space = spaceModel
-    this.spaceMember = spaceMemberModel
+    this.user = userModel;
+    this.space = spaceModel;
+    this.spaceMember = spaceMemberModel;
+    this.project = projectModel;
+    this.projectMember = projectMemberModel;
   }
 
   onApplicationBootstrap(): any {
-    const startTime = new Date().getTime()
+    const startTime = new Date().getTime();
 
     this.runMigrations().then(() => {
-      this.logger.log(
-        `Took ${~~((new Date().getTime() - startTime) / 100) / 10}s to migrate.`,
-      )
-    })
+      this.logger.log(`Took ${~~((new Date().getTime() - startTime) / 100) / 10}s to migrate.`);
+    });
   }
 
-  async runMigrations() {
-  }
+  async runMigrations() {}
 }

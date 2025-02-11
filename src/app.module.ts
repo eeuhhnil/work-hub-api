@@ -1,11 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './modules/user/user.module';
-import { DbModule } from './common/db/db.module';
-import { AuthModule } from './common/auth/auth.module';
-import { JwtAuthGuard } from './common/auth/guards';
-import { APP_GUARD } from '@nestjs/core';
-import { SpaceModule } from './modules/space/space.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { UserModule } from "./modules/user/user.module";
+import { DbModule } from "./common/db/db.module";
+import { AuthModule } from "./common/auth/auth.module";
+import { JwtAuthGuard } from "./common/auth/guards";
+import { APP_GUARD } from "@nestjs/core";
+import { SpaceModule } from "./modules/space/space.module";
+import { ProjectModule } from "./modules/project/project.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SpaceModule } from './modules/space/space.module';
     AuthModule,
     UserModule,
     SpaceModule,
+    ProjectModule,
   ],
   controllers: [],
   providers: [
