@@ -5,19 +5,20 @@ import { UserService } from "../../modules/user/user.service";
 import * as bcrypt from "bcrypt";
 import { AuthPayload, JwtSign } from "./types";
 import { JwtService } from "@nestjs/jwt";
+import {DbService} from "../db/db.service";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly configService: ConfigService,
-    private readonly jwtService: JwtService,
-    private readonly userService: UserService
+    private readonly config: ConfigService,
+    private readonly jwt: JwtService,
+    private readonly db: DbService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findOne({ email });
+    const user = await this.db.user.findOne({ email }).select('+password')
     if (user && bcrypt.compareSync(password, user.password)) {
-      const { password, ...result } = user.toJSON();
+      const { password, ...result } = user.toJSON()
       return result;
     }
 
@@ -26,10 +27,10 @@ export class AuthService {
 
   async register(payload: RegisterDto) {
     const { email, password, fullName } = payload;
-    const user = await this.userService.exists({ email });
+    const user = await this.db.user.exists({ email });
     if (user) throw new ConflictException("USER_EXISTS");
 
-    return this.userService.createUser({
+    return this.db.user.create({
       email,
       username: await this.generateUniqueUsername(fullName),
       password: bcrypt.hashSync(password, 10),
@@ -49,10 +50,10 @@ export class AuthService {
   }
 
   async jwtRefresh(refreshToken: string): Promise<JwtSign> {
-    const payload = this.jwtService.verify(refreshToken, {
-      secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
+    const payload = this.jwt.verify(refreshToken, {
+      secret: this.config.get<string>("JWT_REFRESH_SECRET"),
     });
-    const user = await this.userService.findOne({ _id: payload.sub });
+    const user = await this.db.user.findOne({ _id: payload.sub });
 
     const authPayload: AuthPayload = {
       sub: user._id.toString(),
@@ -66,16 +67,16 @@ export class AuthService {
 
   private jwtSign(payload: AuthPayload): JwtSign {
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwt.sign(payload),
       refresh_token: this.jwtSignRefresh(payload),
     };
   }
 
   private jwtSignRefresh(payload: AuthPayload): string {
-    return this.jwtService.sign(
+    return this.jwt.sign(
       { sub: payload.sub },
       {
-        secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
+        secret: this.config.get<string>("JWT_REFRESH_SECRET"),
         expiresIn: "7d",
       }
     );
@@ -85,7 +86,7 @@ export class AuthService {
     let username: string;
     while (true) {
       username = await this.generateRandomName(fullName);
-      const existingUser = await this.userService.exists({ username });
+      const existingUser = await this.db.user.exists({ username });
       if (!existingUser) break;
     }
 

@@ -26,6 +26,7 @@ export class User {
   @Prop({
     type: String,
     required: false,
+    select: false,
   })
   password?: string
 
