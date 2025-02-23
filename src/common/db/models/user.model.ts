@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as paginate from 'mongoose-paginate-v2';
-import { SystemRole } from '../../../modules/user/enums';
+import {SystemRole} from "../../../modules/users/enums";
 
 @Schema({
   timestamps: true,
@@ -46,7 +46,7 @@ export class User {
     type: String,
     enum: Object.values(SystemRole),
     required: false,
-    default: SystemRole.User
+    default: SystemRole.USER
   })
   role?: SystemRole
 }
