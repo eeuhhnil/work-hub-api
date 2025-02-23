@@ -3,9 +3,9 @@ import { IdLike } from '../../types';
 import { User } from './user.model';
 import { Space } from './space.model';
 import { Project } from './project.model';
-import { TaskStatus } from '../../../modules/Task/enums';
 import mongoose from 'mongoose';
 import * as paginate from 'mongoose-paginate-v2';
+import {TaskStatus} from "../../enums";
 
 @Schema({
   timestamps: true,
@@ -27,7 +27,7 @@ export class Task {
   @Prop({
     type: String,
     enum: Object.values(TaskStatus),
-    default: TaskStatus.Pending,
+    default: TaskStatus.PENDING,
   })
   status: TaskStatus
 

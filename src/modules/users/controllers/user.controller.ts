@@ -6,10 +6,10 @@ import { AuthUser } from "src/common/auth/decorators";
 import {ApiPagination, Pagination} from "../../../common/decorators";
 import {PaginationDto} from "../../../common/dtos";
 import {QueryUsersDto, UpdateProfileDto} from "../dtos";
-import {SystemRole} from "../enums";
 import {UserRoles} from "../../../common/auth/decorators/system-role.decorator";
+import {SystemRole} from "../../../common/enums";
 
-@Controller()
+@Controller('users')
 @ApiTags('Users')
 @ApiBearerAuth()
 export class UserController {

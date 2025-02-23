@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as paginate from 'mongoose-paginate-v2';
-import {SystemRole} from "../../../modules/users/enums";
+import {SystemRole} from "../../enums";
 
 @Schema({
   timestamps: true,

@@ -24,13 +24,6 @@ export class Space {
     required: false,
   })
   description?: string
-
-  @Prop({
-    type: Boolean,
-    required: false,
-    default: false,
-  })
-  isDefault?: boolean
 }
 
 export const SpaceSchema = SchemaFactory.createForClass(Space)
