@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import { IdLike } from '../../types';
 import { Project } from './project.model';
 import { User } from './user.model';
-import { ProjectRole } from '../../../modules/project/enums';
 import * as paginate from 'mongoose-paginate-v2';
+import {ProjectRole} from "../../enums";
 
 @Schema({
   timestamps: true,
@@ -27,7 +27,7 @@ export class ProjectMember {
   @Prop({
     type: String,
     enum: Object.values(ProjectRole),
-    default: ProjectRole.Member,
+    default: ProjectRole.MEMBER,
   })
   role: ProjectRole
 }

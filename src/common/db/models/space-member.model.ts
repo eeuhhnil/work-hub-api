@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import { IdLike } from '../../types';
 import { Space } from './space.model';
 import { User } from './user.model';
-import { SpaceRole } from '../../../modules/space/enums';
 import * as paginate from 'mongoose-paginate-v2';
+import {SpaceRole} from "../../enums";
 
 @Schema({
   timestamps: true,
@@ -27,7 +27,7 @@ export class SpaceMember {
   @Prop({
     type: String,
     enum: Object.values(SpaceRole),
-    default: SpaceRole.Member,
+    default: SpaceRole.MEMBER,
   })
   role: SpaceRole
 }
