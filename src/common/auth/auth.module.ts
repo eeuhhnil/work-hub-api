@@ -1,5 +1,4 @@
 import { Global, Module } from '@nestjs/common';
-import { UserModule } from '../../modules/user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
@@ -20,7 +19,6 @@ import { JwtStrategy, LocalStrategy } from './strategies';
       },
       inject: [ConfigService]
     }),
-    UserModule,
     PassportModule,
   ],
   controllers: [AuthController],
