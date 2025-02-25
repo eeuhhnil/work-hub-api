@@ -5,6 +5,6 @@ import * as services from "./services";
 @Module({
   controllers: [...Object.values(controllers)],
   providers: [...Object.values(services)],
-  exports: [],
+  exports: [...Object.values(services)],
 })
 export class SpaceModule {}

@@ -54,7 +54,7 @@ export class SpaceMemberService {
 
   async checkMembership(spaceId: IdLike<string>, memberId: IdLike<string>) {
     const membership = await this.db.spaceMember.findOne({space: spaceId, user: memberId})
-    if (!membership) throw new ForbiddenException(`Permission denied membership`)
+    if (!membership) throw new ForbiddenException(`Permission denied space membership`)
 
     return membership
   }
@@ -65,7 +65,7 @@ export class SpaceMemberService {
       user: ownerId,
       role: SpaceRole.OWNER
     })
-    if (!ownership) throw new ForbiddenException(`Permission denied ownership`)
+    if (!ownership) throw new ForbiddenException(`Permission denied space ownership`)
 
     return ownership
   }
