@@ -33,8 +33,13 @@ export class SpaceService {
     query: QuerySpacesDto,
     paginationDto: PaginationDto
   ) {
-    const {name, description, role} = query
     const filter: FilterQuery<Space> = {}
+
+    const spaceMembers = await this.db.spaceMember.find({ user: userId })
+    const spaceIds = spaceMembers.map((sm) => sm.space)
+    filter._id = { $in: spaceIds }
+
+    const {name, description, role} = query
     if (name) filter.name = {$regex: name, $options: "i"}
     if (description) filter.description = {$regex: description, $options: "i"}
     if (role) {

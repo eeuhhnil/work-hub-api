@@ -6,6 +6,8 @@ import { JwtAuthGuard } from "./common/auth/guards";
 import { APP_GUARD } from "@nestjs/core";
 import {UserModule} from "./modules/users/user.module";
 import {SpaceModule} from "./modules/spaces/space.module";
+import {ProjectModule} from "./modules/projects/project.module";
+import {StorageModule} from "./common/storages/storage.module";
 
 @Module({
   imports: [
@@ -13,9 +15,11 @@ import {SpaceModule} from "./modules/spaces/space.module";
       isGlobal: true,
     }),
     DbModule,
+    StorageModule,
     AuthModule,
     UserModule,
     SpaceModule,
+    ProjectModule
   ],
   controllers: [],
   providers: [
