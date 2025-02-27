@@ -10,8 +10,6 @@ import {ProjectRole} from "../../enums";
   timestamps: true,
 })
 export class ProjectMember {
-  _id: mongoose.Types.ObjectId
-
   @Prop({
     type: String,
     ref: 'Project',

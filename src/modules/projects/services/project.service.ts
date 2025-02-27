@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, NotFoundException} from "@nestjs/common";
 import {DbService} from "../../../common/db/db.service";
 import {CreateProjectDto, QueryProjectDto, UpdateProjectDto} from "../dtos";
 import {IdLike} from "../../../common/types";
@@ -71,5 +71,12 @@ export class ProjectService {
 
   async deleteOne(projectId: IdLike<string>) {
     return this.db.project.deleteOne({_id: projectId})
+  }
+
+  async checkExistingProject(projectId: IdLike<string>) {
+    const project = await this.db.project.exists({_id: projectId})
+    if (!project) throw new NotFoundException(`Project not found`)
+
+    return project
   }
 }

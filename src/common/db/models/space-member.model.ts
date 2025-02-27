@@ -10,8 +10,6 @@ import {SpaceRole} from "../../enums";
   timestamps: true,
 })
 export class SpaceMember {
-  _id: mongoose.Types.ObjectId
-
   @Prop({
     type: String,
     ref: 'Space',

@@ -6,8 +6,6 @@ import * as paginate from 'mongoose-paginate-v2';
   timestamps: true,
 })
 export class Space {
-  _id: mongoose.Types.ObjectId
-
   @Prop({
     type: String,
   })

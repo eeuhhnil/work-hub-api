@@ -53,4 +53,11 @@ export class UserService {
   async deleteOne(userId: IdLike<string>) {
     return this.db.user.deleteOne({_id: userId})
   }
+
+  async checkExistingUser(userId: IdLike<string>) {
+    const user = await this.db.user.exists({_id: userId})
+    if (!user) throw new NotFoundException('User not found')
+
+    return user
+  }
 }

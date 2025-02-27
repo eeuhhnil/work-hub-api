@@ -76,4 +76,11 @@ export class SpaceService {
 
     return this.db.space.deleteOne({_id: spaceId})
   }
+
+  async checkExistingSpace(spaceId: IdLike<string>) {
+    const space = await this.db.space.exists({_id: spaceId})
+    if (!space) throw new NotFoundException(`User not found`)
+
+    return space
+  }
 }

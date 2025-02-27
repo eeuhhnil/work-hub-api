@@ -8,6 +8,7 @@ import {UserModule} from "./modules/users/user.module";
 import {SpaceModule} from "./modules/spaces/space.module";
 import {ProjectModule} from "./modules/projects/project.module";
 import {StorageModule} from "./common/storages/storage.module";
+import {TaskModule} from "./modules/tasks/task.module";
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import {StorageModule} from "./common/storages/storage.module";
     AuthModule,
     UserModule,
     SpaceModule,
-    ProjectModule
+    ProjectModule,
+    TaskModule,
   ],
   controllers: [],
   providers: [
