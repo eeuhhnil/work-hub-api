@@ -11,7 +11,29 @@ import {TaskStatus} from "../../enums";
   timestamps: true,
 })
 export class Task {
-  _id: mongoose.Types.ObjectId
+  @Prop({
+    type: String,
+    ref: 'Space',
+  })
+  space: IdLike<Space>
+
+  @Prop({
+    type: String,
+    ref: 'Project',
+  })
+  project: IdLike<Project>
+
+  @Prop({
+    type: String,
+    ref: 'User',
+  })
+  owner: IdLike<User>
+
+  @Prop({
+    type: String,
+    ref: 'User',
+  })
+  assignee: IdLike<User>
 
   @Prop({
     type: String,
@@ -28,38 +50,21 @@ export class Task {
     type: String,
     enum: Object.values(TaskStatus),
     default: TaskStatus.PENDING,
+    required: false,
   })
-  status: TaskStatus
+  status?: TaskStatus
+
+  @Prop({
+    type: Date,
+    required: false,
+  })
+  completedAt?: Date
 
   @Prop({
     type: Date,
     required: false,
   })
   dueDate?: Date
-
-  @Prop({
-    type: String,
-    ref: 'User',
-  })
-  owner: IdLike<User>
-
-  @Prop({
-    type: String,
-    ref: 'User',
-  })
-  assignee: IdLike<User>
-
-  @Prop({
-    type: String,
-    ref: 'Space',
-  })
-  space: IdLike<Space>
-
-  @Prop({
-    type: String,
-    ref: 'Project',
-  })
-  project: IdLike<Project>
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task)

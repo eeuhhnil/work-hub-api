@@ -10,7 +10,12 @@ async function bootstrap() {
   const config = app.get<ConfigService>(ConfigService)
 
   // validation pipe
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }))
 
   app.useGlobalInterceptors(new ResponseInterceptor())
 

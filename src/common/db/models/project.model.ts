@@ -8,18 +8,16 @@ import * as paginate from 'mongoose-paginate-v2';
   timestamps: true,
 })
 export class Project {
-  _id: mongoose.Types.ObjectId
-
-  @Prop({
-    type: String,
-  })
-  name: string
-
   @Prop({
     type: String,
     ref: 'Space',
   })
   space: IdLike<Space>
+
+  @Prop({
+    type: String,
+  })
+  name: string
 
   @Prop({
     type: String,

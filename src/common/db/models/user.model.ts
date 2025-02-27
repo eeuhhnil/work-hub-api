@@ -7,8 +7,6 @@ import {SystemRole} from "../../enums";
   timestamps: true,
 })
 export class User {
-  _id: mongoose.Types.ObjectId
-
   @Prop({
     type: String,
     unique: true,
