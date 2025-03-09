@@ -33,6 +33,10 @@ export class UserService {
       {new: true})
   }
 
+  async findUserByEmail(email: IdLike<string>) {
+    return this.db.user.findOne({email})
+  }
+
   async findMany(query: QueryUsersDto, pagination: PaginationDto) {
     const {username, email, fullName} = query
     const filter: FilterQuery<User> = {}
