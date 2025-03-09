@@ -2,13 +2,15 @@ import {Body, Controller, Delete, Get, NotFoundException, Param, Post, Query} fr
 import {ProjectMemberService, ProjectService} from "../services";
 import {AuthUser} from "../../../common/auth/decorators";
 import {AuthPayload} from "../../../common/auth/types";
-import {ApiOperation} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiOperation} from "@nestjs/swagger";
 import {CreateProjectMemberDto, QueryProjectMemberDto} from "../dtos";
 import {ProjectRole} from "../../../common/enums";
 import {ApiPagination, Pagination} from "../../../common/decorators";
 import {PaginationDto} from "../../../common/dtos";
 
 @Controller('project')
+@ApiBearerAuth()
+
 export class ProjectMemberController {
   constructor(
     private readonly projectMember: ProjectMemberService,
