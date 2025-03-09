@@ -21,4 +21,8 @@ export class UpdateProfileDto {
   @IsString()
   @IsOptional()
   fullName?: string
+
+  @IsString()
+  @IsOptional()
+  avatar?: string
 }
