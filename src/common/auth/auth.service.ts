@@ -24,6 +24,30 @@ export class AuthService {
     return null;
   }
 
+  async validateGoogleUser(payload: {
+    googleId: string
+    email: string
+    fullName: string
+    avatar?: string
+  }) {
+    let user = await this.db.user.findOne({ email: payload.email })
+
+    if (!user) {
+      user = await this.db.user.create({
+        email: payload.email,
+        fullName: payload.fullName,
+        avatar: payload.avatar,
+        googleId: payload.googleId,
+        username: await this.generateUniqueUsername(payload.fullName),
+      })
+    } else if (!user.googleId) {
+      user.googleId = payload.googleId
+      await user.save()
+    }
+
+    return this.jwtSign({ sub: user._id.toString(), username: user.username, email: user.email, role: user.role })
+  }
+
   async register(payload: RegisterDto) {
     const { email, password, fullName } = payload;
     const user = await this.db.user.exists({ email });

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as paginate from 'mongoose-paginate-v2';
 import {SystemRole} from "../../enums";
@@ -20,6 +19,12 @@ export class User {
     required: true,
   })
   email: string
+
+  @Prop({
+    type: String,
+    required: false,
+  })
+  googleId?: string
 
   @Prop({
     type: String,
