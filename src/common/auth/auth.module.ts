@@ -8,6 +8,7 @@ import { JwtStrategy, LocalStrategy } from './strategies';
 
 @Global()
 @Module({
+
   imports: [
     JwtModule.registerAsync({
       imports: [ConfigModule],

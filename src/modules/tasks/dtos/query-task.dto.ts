@@ -1,8 +1,14 @@
-import {OmitType} from "@nestjs/swagger";
-import {UpdateTaskDto} from "./update-task.dto";
+import {ApiProperty, OmitType} from "@nestjs/swagger";
+import {IsMongoId, IsNotEmpty} from "class-validator";
 
-export class QueryTaskDto extends OmitType(
-  UpdateTaskDto,
-  ['description'] as const,
-) {
+export class QueryTaskDto{
+    @ApiProperty()
+    @IsMongoId()
+    @IsNotEmpty()
+    space: string
+
+    @ApiProperty()
+    @IsMongoId()
+    @IsNotEmpty()
+    project: string
 }

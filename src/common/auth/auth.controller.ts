@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { LoginLocalDto, RegisterDto } from './dtos';
 import { LocalAuthGuard } from './guards';
 import { RefreshTokenDto } from './dtos/refresh-token.dto';
-import { Public } from './decorators';
+import {Public} from './decorators';
 
 @Controller('auth')
 @ApiTags('Auth')
