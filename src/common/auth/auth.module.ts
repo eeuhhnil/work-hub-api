@@ -8,6 +8,7 @@ import {AuthService} from "./auth.service";
 
 @Global()
 @Module({
+
   imports: [
     JwtModule.registerAsync({
       imports: [ConfigModule],

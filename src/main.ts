@@ -42,7 +42,13 @@ async function bootstrap() {
     })
     .build()
   const document = SwaggerModule.createDocument(app, swaggerConfig, {deepScanRoutes: true})
-  SwaggerModule.setup('api', app, document, {swaggerOptions: {docExpansion: 'none'}});
+  SwaggerModule.setup('api', app, document, {swaggerOptions:
+          {persistAuthorization: true,
+          uiConfig: {
+              docExpansion: "none",
+          },
+          }}
+  );
 
   await app.listen(config.get<number>('PORT') || 3000)
 
