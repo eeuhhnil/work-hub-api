@@ -1,12 +1,26 @@
-import {Body, Controller, Delete, ForbiddenException, Get, NotFoundException, Param, Post, Put} from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  ForbiddenException,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+  Query
+} from "@nestjs/common";
 import {ApiBearerAuth, ApiOperation, ApiTags} from "@nestjs/swagger";
 import {TaskService} from "../services";
-import {CreateTaskDto, UpdateTaskDto} from "../dtos";
+import {CreateTaskDto, QueryTaskDto, UpdateTaskDto} from "../dtos";
 import {AuthUser} from "../../../common/auth/decorators";
 import {AuthPayload} from "../../../common/auth/types";
 import {SpaceMemberService} from "../../spaces/services";
 import {ProjectMemberService} from "../../projects/services";
 import {ProjectRole, SpaceRole, TaskStatus} from "../../../common/enums";
+import {ApiPagination, Pagination} from "../../../common/decorators";
+import {QueryProjectDto} from "../../projects/dtos";
+import {PaginationDto} from "../../../common/dtos";
 
 @Controller('tasks')
 @ApiTags('Tasks')
@@ -45,6 +59,24 @@ export class TaskController {
       data: createdTask?.toJSON(),
     }
   }
+
+  @Get()
+  @ApiOperation({ summary: "Find many projects" })
+  @ApiPagination()
+  async findMany(
+      @AuthUser() authPayload: AuthPayload,
+      @Query() query: QueryTaskDto,
+      @Pagination() paginationDto: PaginationDto,
+  ) {
+    const pagination = await this.taskService.findMany(authPayload.sub, query, paginationDto)
+
+    return {
+      message: 'Find many projects successfully',
+      data: pagination.docs.map((doc) => doc.toJSON()),
+      _pagination: pagination,
+    }
+  }
+
 
   @Get(':taskId')
   @ApiOperation({summary: 'Get one task'})
